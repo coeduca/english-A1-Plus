@@ -1,0 +1,1276 @@
+/* ==========================================================================
+   COEDUCA Framework v1 - Core CSS (Pop Art ENHANCED)
+   Profesor José Eliseo Martínez - COEDUCA
+   ========================================================================== */
+
+:root {
+  --coeduca-primary: #FFD700;
+  --coeduca-accent: #FF6B9D;
+  --coeduca-bg: #FFF8E7;
+  --coeduca-surface: #FFFFFF;
+  --coeduca-stroke: #1a1a1a;
+  --coeduca-text: #1a1a1a;
+  --coeduca-success: #4CAF50;
+  --coeduca-error: #E63946;
+  --coeduca-info: #4FC3F7;
+  --coeduca-purple: #9B5DE5;
+  --coeduca-orange: #FF9F1C;
+  --coeduca-shadow: 5px 5px 0 #1a1a1a;
+  --coeduca-shadow-sm: 3px 3px 0 #1a1a1a;
+  --coeduca-shadow-lg: 8px 8px 0 #1a1a1a;
+  --coeduca-radius: 16px;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-touch-callout: none;
+  margin: 0;
+  padding: 0;
+  font-family: 'Comic Sans MS', 'Chalkboard SE', system-ui, sans-serif;
+  background: var(--coeduca-bg);
+  color: var(--coeduca-text);
+  overflow-x: hidden;
+}
+
+/* Halftones de fondo (Pop Art) - layered, bolder */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(0,0,0,0.10) 1.4px, transparent 0),
+    radial-gradient(circle at 12px 12px, rgba(255, 107, 157, 0.18) 2px, transparent 0);
+  background-size: 22px 22px, 44px 44px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Diagonal pop-art rays from top-left */
+body::after {
+  content: '';
+  position: fixed;
+  top: -120px;
+  left: -120px;
+  width: 480px;
+  height: 480px;
+  background: repeating-conic-gradient(
+    from 0deg at 50% 50%,
+    rgba(255, 215, 0, 0.10) 0deg 12deg,
+    transparent 12deg 24deg
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.coeduca-app {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px 16px 140px;
+}
+
+/* ===== HEADER ===== */
+.coeduca-header {
+  background:
+    repeating-linear-gradient(45deg, rgba(255,255,255,0.18) 0 12px, transparent 12px 24px),
+    linear-gradient(135deg, var(--coeduca-primary) 0%, #FFC700 100%);
+  border: 5px solid var(--coeduca-stroke);
+  border-radius: var(--coeduca-radius);
+  padding: 22px 24px;
+  margin-bottom: 28px;
+  box-shadow: var(--coeduca-shadow);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+/* Burst circle on the right */
+.coeduca-header::after {
+  content: '';
+  position: absolute;
+  top: -28px; right: -28px;
+  width: 110px; height: 110px;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255,255,255,0.55), transparent 55%),
+    var(--coeduca-accent);
+  border: 4px solid var(--coeduca-stroke);
+  border-radius: 50%;
+  opacity: 0.9;
+  box-shadow: -3px 3px 0 var(--coeduca-stroke);
+}
+/* Small dot on the left */
+.coeduca-header::before {
+  content: '';
+  position: absolute;
+  bottom: -18px; left: -18px;
+  width: 60px; height: 60px;
+  background: var(--coeduca-info);
+  border: 3px solid var(--coeduca-stroke);
+  border-radius: 50%;
+  opacity: 0.8;
+  z-index: 0;
+}
+.coeduca-header h1 {
+  margin: 0 0 6px;
+  font-size: clamp(22px, 5.5vw, 34px);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #fff;
+  -webkit-text-stroke: 2px var(--coeduca-stroke);
+  text-shadow:
+    3px 3px 0 var(--coeduca-stroke),
+    6px 6px 0 var(--coeduca-accent);
+  position: relative;
+  z-index: 1;
+}
+.coeduca-header p {
+  margin: 0;
+  font-size: 14px;
+  font-weight: bold;
+  position: relative;
+  z-index: 1;
+  background: rgba(255,255,255,0.7);
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 50px;
+  border: 2px solid var(--coeduca-stroke);
+}
+
+/* Nombres de estudiantes en el header */
+.coeduca-header-students {
+  margin-top: 14px;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 3px dashed var(--coeduca-stroke);
+  border-radius: 12px;
+  font-size: 13px;
+  text-align: left;
+  position: relative;
+  z-index: 1;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.12);
+}
+.coeduca-header-students:empty { display: none; }
+.coeduca-header-students-label {
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  margin-right: 4px;
+}
+.coeduca-header-student-pill {
+  display: inline-block;
+  background: var(--coeduca-accent);
+  color: var(--coeduca-surface);
+  border: 2px solid var(--coeduca-stroke);
+  border-radius: 50px;
+  padding: 3px 11px;
+  margin: 2px 3px;
+  font-size: 12px;
+  font-weight: 900;
+  text-shadow: 1px 1px 0 var(--coeduca-stroke);
+  box-shadow: 2px 2px 0 var(--coeduca-stroke);
+}
+
+/* Botón "+ Agregar miembro" en header */
+.coeduca-add-member-btn {
+  margin-top: 12px;
+  font-size: 12px !important;
+  padding: 7px 14px !important;
+  position: relative;
+  z-index: 1;
+}
+.coeduca-add-member-btn:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ===== EXERCISE CARD ===== */
+.coeduca-exercise {
+  background: var(--coeduca-surface);
+  border: 5px solid var(--coeduca-stroke);
+  border-radius: var(--coeduca-radius);
+  padding: 22px 20px 20px;
+  margin-bottom: 26px;
+  box-shadow: var(--coeduca-shadow);
+  animation: coeducaPopIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+}
+/* Ben-day dots in corner of each exercise */
+.coeduca-exercise::before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  width: 60px;
+  height: 30px;
+  background-image: radial-gradient(circle, var(--coeduca-accent) 1.5px, transparent 2px);
+  background-size: 8px 8px;
+  opacity: 0.45;
+  pointer-events: none;
+}
+@keyframes coeducaPopIn {
+  0%   { opacity: 0; transform: scale(0.85) translateY(20px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+.coeduca-exercise-title {
+  display: inline-block;
+  background: var(--coeduca-accent);
+  color: var(--coeduca-surface);
+  border: 3px solid var(--coeduca-stroke);
+  border-radius: 12px;
+  padding: 7px 16px;
+  margin: -34px 0 16px -10px;
+  font-size: 16px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: var(--coeduca-shadow-sm);
+  text-shadow: 1px 1px 0 var(--coeduca-stroke);
+  transform: rotate(-1.5deg);
+  position: relative;
+  z-index: 1;
+}
+.coeduca-exercise-instruction {
+  background: linear-gradient(90deg, #FFFEF0 0%, #fff 100%);
+  border-left: 6px solid var(--coeduca-primary);
+  border-top: 2px solid var(--coeduca-stroke);
+  border-right: 2px solid var(--coeduca-stroke);
+  border-bottom: 2px solid var(--coeduca-stroke);
+  padding: 10px 14px;
+  margin: 0 0 16px;
+  font-size: 14px;
+  font-style: italic;
+  font-weight: bold;
+  border-radius: 0 10px 10px 0;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.08);
+}
+.coeduca-exercise-score {
+  float: right;
+  background: var(--coeduca-primary);
+  border: 3px solid var(--coeduca-stroke);
+  border-radius: 10px;
+  padding: 5px 12px;
+  font-size: 13px;
+  font-weight: 900;
+  margin-left: 10px;
+  box-shadow: 2px 2px 0 var(--coeduca-stroke);
+}
+
+/* ===== NOTE (escape hatch) ===== */
+.coeduca-note {
+  background: var(--coeduca-surface);
+  border: 4px dashed var(--coeduca-stroke);
+  border-radius: var(--coeduca-radius);
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  font-size: 15px;
+  line-height: 1.5;
+  position: relative;
+  box-shadow: 3px 3px 0 rgba(0,0,0,0.12);
+}
+.coeduca-note::before {
+  content: '!';
+  position: absolute;
+  top: -16px;
+  left: 16px;
+  width: 32px;
+  height: 32px;
+  background: var(--coeduca-primary);
+  border: 3px solid var(--coeduca-stroke);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  font-size: 18px;
+  color: var(--coeduca-stroke);
+  box-shadow: 2px 2px 0 var(--coeduca-stroke);
+}
+.coeduca-note img,
+.coeduca-note video {
+  max-width: 100%;
+  height: auto;
+  border: 3px solid var(--coeduca-stroke);
+  border-radius: 10px;
+  display: block;
+  margin: 10px auto;
+  box-shadow: 3px 3px 0 var(--coeduca-stroke);
+}
+
+/* ===== AUDIO PLAYER ===== */
+.coeduca-audio {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, var(--coeduca-info) 0%, #29B6F6 100%);
+  border: 3px solid var(--coeduca-stroke);
+  border-radius: 50px;
+  padding: 8px 18px 8px 8px;
+  margin: 0 0 18px;
+  box-shadow: var(--coeduca-shadow-sm);
+  width: fit-content;
+  max-width: 100%;
+}
+.coeduca-audio-btn {
+  width: 50px; height: 50px;
+  border: 3px solid var(--coeduca-stroke);
+  border-radius: 50%;
+  background: var(--coeduca-surface);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  transition: transform 0.15s;
+  box-shadow: 2px 2px 0 var(--coeduca-stroke);
+}
+.coeduca-audio-btn:hover { transform: scale(1.08) rotate(-5deg); }
+.coeduca-audio-btn:active { transform: scale(0.92); }
+.coeduca-audio-btn svg {
+  width: 22px; height: 22px;
+  fill: var(--coeduca-stroke);
+}
+.coeduca-audio-label {
+  font-weight: 900;
+  font-size: 14px;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 1px 1px 0 var(--coeduca-stroke);
+  letter-spacing: 1px;
+}
+
+/* ===== EXERCISE IMAGE ===== */
+.coeduca-exercise-image {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto 16px;
+  border: 3px solid var(--coeduca-stroke);
+  border-radius: 10px;
+  box-shadow: 3px 3px 0 var(--coeduca-stroke);
+}
+
+/* ===== BUTTONS ===== */
+.coeduca-btn {
+  display: inline-block;
+  background: var(--coeduca-primary);
+  color: var(--coeduca-stroke);
+  border: 3px solid var(--coeduca-stroke);
+  border-radius: 12px;
+  padding: 11px 20px;
+  font-size: 15px;
+  font-weight: 900;
+  font-family: inherit;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  box-shadow: var(--coeduca-shadow-sm);
+  transition: transform 0.12s, box-shadow 0.12s;
+  text-decoration: none;
+  position: relative;
+}
+.coeduca-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--coeduca-stroke);
+}
+.coeduca-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0 0 0 var(--coeduca-stroke);
+}
+.coeduca-btn-accent { background: var(--coeduca-accent); color: var(--coeduca-surface); text-shadow: 1px 1px 0 var(--coeduca-stroke); }
+.coeduca-btn-success { background: var(--coeduca-success); color: var(--coeduca-surface); text-shadow: 1px 1px 0 var(--coeduca-stroke); }
+.coeduca-btn-info { background: var(--coeduca-info); color: var(--coeduca-stroke); }
+
+/* ===== INPUTS ===== */
+.coeduca-input {
+  background: var(--coeduca-surface);
+  border: 3px solid var(--coeduca-stroke);
+  border-radius: 10px;
+  padding: 9px 13px;
+  font-size: 15px;
+  font-weight: bold;
+  font-family: inherit;
+  color: var(--coeduca-text);
+  outline: none;
+  user-select: text;
+  -webkit-user-select: text;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.15);
+  transition: box-shadow 0.15s, transform 0.15s;
+}
+.coeduca-input:focus {
+  background: #FFFEF0;
+  box-shadow: var(--coeduca-shadow-sm);
+  transform: translate(-1px, -1px);
+}
+.coeduca-input.correct {
+  background: #C8E6C9;
+  border-color: var(--coeduca-success);
+  animation: coeducaCorrectPulse 0.4s ease;
+}
+.coeduca-input.wrong {
+  background: #FFCDD2;
+  border-color: var(--coeduca-error);
+  animation: coeducaShake 0.3s;
+}
+@keyframes coeducaCorrectPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* ===== LOGIN MODAL ===== */
+.coeduca-login-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 26, 26, 0.85);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 9998;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  animation: coeducaFadeIn 0.3s;
+}
+@keyframes coeducaFadeIn { from {opacity:0} to {opacity:1} }
+
+.coeduca-login-modal {
+  background: var(--coeduca-surface);
+  border: 5px solid var(--coeduca-stroke);
+  border-radius: 22px;
+  padding: 0;
+  max-width: 440px;
+  width: 100%;
+  box-shadow: var(--coeduca-shadow-lg), 0 0 0 8px rgba(255, 215, 0, 0.18);
+  animation: coeducaPopIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  max-height: 92vh;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.coeduca-login-modal-scroll {
+  overflow-y: auto;
+  flex: 1;
+}
+
+.coeduca-login-modal::before {
+  content: '';
+  position: absolute;
+  top: -10px; right: -10px;
+  width: 78px; height: 78px;
+  background: var(--coeduca-accent);
+  border: 4px solid var(--coeduca-stroke);
+  border-radius: 50%;
+  z-index: 2;
+  pointer-events: none;
+  background-image: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.55), transparent 50%);
+  box-shadow: -3px 3px 0 var(--coeduca-stroke);
+}
+
+/* Header del modal */
+.coeduca-login-header {
+  background: linear-gradient(135deg, var(--coeduca-primary) 0%, #FFA500 100%);
+  border-bottom: 4px solid var(--coeduca-stroke);
+  padding: 24px 24px 22px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+}
+.coeduca-login-header::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle at 1px 1px, rgba(0,0,0,0.14) 1.2px, transparent 0);
+  background-size: 14px 14px;
+  pointer-events: none;
+  opacity: 0.7;
+}
+.coeduca-login-badge {
+  display: inline-block;
+  background: var(--coeduca-stroke);
+  color: var(--coeduca-primary);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  padding: 5px 16px;
+  border-radius: 50px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  position: relative;
+  z-index: 2;
+  box-shadow: 2px 2px 0 var(--coeduca-accent);
+}
+.coeduca-login-modal h2 {
+  margin: 0 0 6px;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 34px;
+  font-weight: 900;
+  color: #fff;
+  -webkit-text-stroke: 2px var(--coeduca-stroke);
+  text-stroke: 2px var(--coeduca-stroke);
+  text-shadow: 4px 4px 0 var(--coeduca-accent), 4px 4px 0 1px var(--coeduca-stroke);
+  letter-spacing: 2px;
+  position: relative;
+  z-index: 2;
+}
+.coeduca-login-modal p {
+  text-align: center;
+  font-size: 14px;
+  margin: 0;
+  font-weight: bold;
+  color: var(--coeduca-stroke);
+  position: relative;
+  z-index: 2;
+}
+
+/* Cuerpo del modal */
+.coeduca-login-modal-scroll {
+  padding: 18px 24px 8px;
+  position: relative;
+  z-index: 1;
+}
+
+.coeduca-login-field {
+  margin-bottom: 14px;
+  animation: coeducaPopIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.coeduca-login-field-partner {
+  background: #FFF8E7;
+  border: 3px dashed var(--coeduca-stroke);
+  border-radius: 12px;
+  padding: 12px !important;
+  margin-bottom: 12px;
+  margin-left: 0;
+  margin-right: 0;
+}
+.coeduca-login-field label {
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 900;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  color: var(--coeduca-stroke);
+  letter-spacing: 0.5px;
+}
+.coeduca-login-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 26px; height: 26px;
+  background: var(--coeduca-accent);
+  color: var(--coeduca-surface);
+  border: 2px solid var(--coeduca-stroke);
+  border-radius: 50%;
+  font-size: 13px;
+  font-weight: 900;
+  margin-right: 8px;
+  text-shadow: 1px 1px 0 var(--coeduca-stroke);
+  flex-shrink: 0;
+  box-shadow: 1px 1px 0 var(--coeduca-stroke);
+}
+.coeduca-login-remove {
+  margin-left: auto;
+  background: var(--coeduca-error);
+  color: white;
+  border: 2px solid var(--coeduca-stroke);
+  border-radius: 50%;
+  width: 26px; height: 26px;
+  font-size: 16px;
+  font-weight: 900;
+  cursor: pointer;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  line-height: 1;
+  box-shadow: 1px 1px 0 var(--coeduca-stroke);
+  transition: transform 0.12s;
+}
+.coeduca-login-remove:hover { transform: scale(1.15) rotate(90deg); }
+
+.coeduca-login-field .coeduca-input {
+  width: 100%;
+  font-size: 17px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  letter-spacing: 1px;
+}
+.coeduca-login-info {
+  background: linear-gradient(135deg, #C8E6C9 0%, #E8F5E9 100%);
+  border: 3px solid var(--coeduca-success);
+  border-radius: 10px;
+  padding: 9px 13px;
+  font-size: 13px;
+  font-weight: bold;
+  margin-top: 8px;
+  display: none;
+  box-shadow: 2px 2px 0 var(--coeduca-stroke);
+  animation: coeducaPopIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.coeduca-login-info.show { display: block; }
+.coeduca-login-info b {
+  color: var(--coeduca-success);
+  font-size: 14px;
+}
+.coeduca-login-info small {
+  font-size: 11px;
+  color: var(--coeduca-stroke);
+  opacity: 0.75;
+}
+
+.coeduca-login-error {
+  background: linear-gradient(135deg, #FFCDD2 0%, #FFEBEE 100%);
+  border: 3px solid var(--coeduca-error);
+  border-radius: 10px;
+  padding: 9px 13px;
+  font-size: 13px;
+  font-weight: bold;
+  margin-top: 8px;
+  color: var(--coeduca-error);
+  display: none;
+  box-shadow: 2px 2px 0 var(--coeduca-stroke);
+  animation: coeducaShake 0.3s;
+}
+.coeduca-login-error.show { display: block; }
+@keyframes coeducaShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+.coeduca-login-actions {
+  display: flex;
+  gap: 10px;
+  padding: 14px 24px 18px;
+  flex-wrap: wrap;
+  border-top: 3px dashed rgba(0,0,0,0.12);
+  background: var(--coeduca-surface);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+.coeduca-login-actions .coeduca-btn {
+  flex: 1;
+  min-width: 130px;
+  padding: 12px 14px;
+  font-size: 14px;
+}
+.coeduca-login-actions .coeduca-btn:disabled {
+  cursor: not-allowed;
+}
+
+@media (max-width: 480px) {
+  .coeduca-login-modal h2 { font-size: 26px; }
+  .coeduca-login-modal::before { width: 52px; height: 52px; top: -5px; right: -5px; }
+  .coeduca-login-actions .coeduca-btn { min-width: 100%; }
+}
+
+/* ===== EXTRA POINTS BADGE ===== */
+.coeduca-extra-badge {
+  position: fixed;
+  top: 14px; left: 14px;
+  background: linear-gradient(135deg, var(--coeduca-accent) 0%, #FF4081 100%);
+  color: var(--coeduca-surface);
+  border: 3px solid var(--coeduca-stroke);
+  border-radius: 50px;
+  padding: 9px 16px;
+  font-size: 14px;
+  font-weight: 900;
+  box-shadow: var(--coeduca-shadow-sm);
+  z-index: 100;
+  text-shadow: 1px 1px 0 var(--coeduca-stroke);
+  animation: coeducaBadgePulse 2.5s ease-in-out infinite;
+}
+@keyframes coeducaBadgePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+
+/* ===== FINAL SCORE ===== */
+.coeduca-final-score {
+  background:
+    repeating-linear-gradient(45deg, rgba(255,255,255,0.2) 0 14px, transparent 14px 28px),
+    linear-gradient(135deg, var(--coeduca-primary) 0%, #FFC700 100%);
+  border: 6px solid var(--coeduca-stroke);
+  border-radius: var(--coeduca-radius);
+  padding: 26px;
+  margin: 32px 0;
+  text-align: center;
+  box-shadow: var(--coeduca-shadow-lg);
+  position: relative;
+  overflow: hidden;
+}
+.coeduca-final-score::before,
+.coeduca-final-score::after {
+  content: '';
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border: 4px solid var(--coeduca-stroke);
+  border-radius: 50%;
+}
+.coeduca-final-score::before {
+  background: var(--coeduca-accent);
+  top: -20px; left: -20px;
+  opacity: 0.7;
+}
+.coeduca-final-score::after {
+  background: var(--coeduca-info);
+  bottom: -25px; right: -25px;
+  opacity: 0.7;
+}
+.coeduca-final-score h2 {
+  margin: 0 0 10px;
+  font-size: 26px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  position: relative;
+  z-index: 1;
+  text-shadow: 2px 2px 0 #fff;
+}
+.coeduca-final-score .score-number {
+  font-size: 56px;
+  font-weight: 900;
+  color: var(--coeduca-accent);
+  text-shadow:
+    3px 3px 0 var(--coeduca-stroke),
+    -1px -1px 0 var(--coeduca-stroke),
+    1px -1px 0 var(--coeduca-stroke),
+    -1px 1px 0 var(--coeduca-stroke);
+  display: block;
+  margin: 8px 0;
+  position: relative;
+  z-index: 1;
+  letter-spacing: 2px;
+}
+.coeduca-final-score p {
+  position: relative;
+  z-index: 1;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* ===== FEEDBACK INLINE ===== */
+.coeduca-feedback {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 18px;
+  font-weight: 900;
+  vertical-align: middle;
+}
+.coeduca-feedback.correct { color: var(--coeduca-success); }
+.coeduca-feedback.wrong { color: var(--coeduca-error); }
+
+/* ============================================================
+   WORDSEARCH — POP ART SUTIL (rediseñado)
+   - Quitamos el grueso fondo negro entre celdas
+   - Celdas con fondo crema cálido (no blanco puro)
+   - Separadores casi invisibles, papel pop-art
+   - Acentos rosados y dorados, animaciones más alegres
+   ============================================================ */
+
+/* Paleta privada del módulo (no toca el resto) */
+.ws-grid-wrap {
+  --ws-paper:        #FFF6E0;       /* fondo del tablero (crema pop) */
+  --ws-paper-deep:   #F4E9C8;       /* gap/separación entre celdas (sutil) */
+  --ws-cell:         #FFFBEC;       /* fondo de celda base */
+  --ws-cell-2:       #FFEFC2;       /* fondo de celda alterno (tablero suave) */
+  --ws-cell-ink:     #2A1E12;       /* tinta cálida (no negro puro) */
+  --ws-frame:        var(--coeduca-accent);
+  --ws-frame-shadow: var(--coeduca-stroke);
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  align-items: flex-start;
+}
+
+/* === Tablero === */
+.ws-grid {
+  display: grid;
+  gap: 2px;                                /* antes 3 — más sutil */
+  background:
+    /* halftone muy tenue dentro del tablero */
+    radial-gradient(circle at 1px 1px, rgba(255,107,157,0.10) 1px, transparent 0) 0 0/14px 14px,
+    linear-gradient(135deg, var(--ws-paper) 0%, var(--ws-paper-deep) 100%);
+  border: 3px solid var(--ws-frame);       /* antes 4px negro — ahora rosa */
+  border-radius: 16px;
+  padding: 10px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+  flex: 1 1 280px;
+  min-width: 0;
+  width: 100%;
+  max-width: 460px;
+  /* Sombra doble: una rosa interior + una negra externa más ligera */
+  box-shadow:
+    0 0 0 4px var(--coeduca-bg),
+    6px 6px 0 var(--ws-frame-shadow),
+    inset 0 0 0 1px rgba(255,255,255,0.6);
+  position: relative;
+  container-type: inline-size;
+  animation: wsBoardIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+@keyframes wsBoardIn {
+  0%   { opacity: 0; transform: scale(0.92) rotate(-1deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0); }
+}
+
+/* Esquina decorativa pop art (estrella/burst) */
+.ws-grid::before {
+  content: '';
+  position: absolute;
+  top: -14px; left: -14px;
+  width: 28px; height: 28px;
+  background:
+    radial-gradient(circle at 30% 30%, #fff 0 22%, transparent 23%),
+    var(--coeduca-primary);
+  border: 2px solid var(--coeduca-stroke);
+  border-radius: 50%;
+  box-shadow: 2px 2px 0 var(--coeduca-stroke);
+  z-index: 3;
+  pointer-events: none;
+}
+.ws-grid::after {
+  content: '';
+  position: absolute;
+  bottom: -10px; right: -10px;
+  width: 22px; height: 22px;
+  background: var(--coeduca-info);
+  border: 2px solid var(--coeduca-stroke);
+  border-radius: 50%;
+  box-shadow: 1px 1px 0 var(--coeduca-stroke);
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* === Celda === */
+.ws-cell {
+  /* Fondo tipo "papel" cálido — sutil pero con vida */
+  background:
+    linear-gradient(145deg, var(--ws-cell) 0%, var(--ws-cell-2) 100%);
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  cursor: pointer;
+  border-radius: 6px;
+  color: var(--ws-cell-ink);
+  /* Borde finísimo en lugar de gap negro */
+  box-shadow: inset 0 0 0 1px rgba(42, 30, 18, 0.10);
+  transition:
+    transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1),
+    background 0.18s,
+    box-shadow 0.18s,
+    color 0.18s;
+  text-transform: uppercase;
+  position: relative;
+  aspect-ratio: 1 / 1;
+  min-width: 0;
+  font-size: var(--ws-cell-font, clamp(9px, 3vw, 16px));
+  line-height: 1;
+  /* Aparición escalonada (el JS aplica --i por celda; con fallback funciona igual) */
+  animation: wsCellIn 0.45s ease both;
+  animation-delay: calc(var(--i, 0) * 6ms);
+}
+@keyframes wsCellIn {
+  0%   { opacity: 0; transform: scale(0.4); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* Tablero ajedrezado MUY sutil (celdas pares un pelín más cálidas) */
+.ws-cell:nth-child(odd) {
+  background: linear-gradient(145deg, #FFFBEC 0%, #FFE9B8 100%);
+}
+.ws-cell:nth-child(even) {
+  background: linear-gradient(145deg, #FFF4D6 0%, #FFE0A8 100%);
+}
+
+/* Hover: la celda "respira" ligeramente */
+@media (hover: hover) {
+  .ws-cell:hover:not(.ws-found):not(.ws-active) {
+    transform: translateY(-1px) scale(1.04);
+    box-shadow:
+      inset 0 0 0 1px rgba(42, 30, 18, 0.15),
+      0 3px 0 rgba(255, 107, 157, 0.35);
+    z-index: 2;
+  }
+}
+
+/* Selección activa: gradiente dorado vibrante */
+.ws-cell.ws-active {
+  background: linear-gradient(135deg, var(--coeduca-primary) 0%, #FF9F1C 100%) !important;
+  color: var(--coeduca-stroke);
+  transform: scale(1.10);
+  box-shadow:
+    inset 0 0 0 2px var(--coeduca-stroke),
+    0 0 0 3px rgba(255,215,0,0.35),
+    0 4px 0 var(--coeduca-stroke);
+  z-index: 4;
+  animation: wsActivePulse 0.6s ease infinite alternate;
+}
+@keyframes wsActivePulse {
+  0%   { filter: brightness(1); }
+  100% { filter: brightness(1.12); }
+}
+
+/* Encontrada: verde menta pop con burst */
+.ws-cell.ws-found {
+  background: linear-gradient(135deg, #B7F5D8 0%, #6FCF97 100%) !important;
+  color: var(--coeduca-stroke);
+  animation: wsFoundPop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow:
+    inset 0 0 0 2px var(--coeduca-success),
+    0 2px 0 rgba(76, 175, 80, 0.4);
+  z-index: 3;
+}
+.ws-cell.ws-found::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, rgba(255,255,255,0.55) 0%, transparent 55%);
+  border-radius: inherit;
+  pointer-events: none;
+  animation: wsFoundShine 0.7s ease forwards;
+}
+@keyframes wsFoundPop {
+  0%   { transform: scale(1); }
+  35%  { transform: scale(1.25) rotate(6deg); }
+  70%  { transform: scale(0.95) rotate(-3deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+@keyframes wsFoundShine {
+  0%   { opacity: 0; transform: scale(0.4); }
+  60%  { opacity: 1; transform: scale(1.1); }
+  100% { opacity: 0; transform: scale(1.4); }
+}
+
+/* === Lista lateral de palabras === */
+.ws-list {
+  flex: 1 1 130px;
+  min-width: 0;
+  background:
+    radial-gradient(circle at 1px 1px, rgba(255,107,157,0.08) 1px, transparent 0) 0 0/12px 12px,
+    linear-gradient(160deg, #FFFEF6 0%, #FFF3D6 100%);
+  border: 3px solid var(--coeduca-stroke);
+  border-radius: 14px;
+  padding: 14px 14px 12px;
+  box-shadow: var(--coeduca-shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+.ws-list::before {
+  content: '';
+  position: absolute;
+  top: -22px; right: -22px;
+  width: 48px; height: 48px;
+  background: var(--coeduca-primary);
+  border: 2px solid var(--coeduca-stroke);
+  border-radius: 50%;
+  box-shadow: -2px 2px 0 var(--coeduca-stroke);
+  opacity: 0.85;
+  pointer-events: none;
+}
+.ws-list-title {
+  margin: 0 0 10px;
+  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  text-align: center;
+  background: linear-gradient(135deg, var(--coeduca-accent) 0%, #FF8FB1 100%);
+  color: #fff;
+  border: 2px solid var(--coeduca-stroke);
+  border-radius: 8px;
+  padding: 5px 8px;
+  text-shadow: 1px 1px 0 var(--coeduca-stroke);
+  box-shadow: 2px 2px 0 var(--coeduca-stroke);
+  position: relative;
+  z-index: 1;
+}
+.ws-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0;
+  font-weight: bold;
+  position: relative;
+  z-index: 1;
+}
+.ws-list li {
+  padding: 6px 10px;
+  border-radius: 8px;
+  margin-bottom: 4px;
+  letter-spacing: 1.2px;
+  font-size: 14px;
+  transition: all 0.2s;
+  border: 2px dashed transparent;
+  background: rgba(255,255,255,0.4);
+  position: relative;
+}
+.ws-list li::before {
+  content: '◇';
+  margin-right: 6px;
+  color: var(--coeduca-accent);
+  font-size: 11px;
+  transition: all 0.3s;
+}
+.ws-list li.ws-li-found {
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--coeduca-success);
+  color: var(--coeduca-success);
+  background: linear-gradient(90deg, #E8F5E9 0%, #C8E6C9 100%);
+  border: 2px dashed var(--coeduca-success);
+  animation: wsLiFound 0.5s ease;
+}
+.ws-list li.ws-li-found::before {
+  content: '✓';
+  color: var(--coeduca-success);
+  font-weight: 900;
+}
+@keyframes wsLiFound {
+  0%   { transform: translateX(0) scale(1); }
+  35%  { transform: translateX(8px) rotate(-3deg) scale(1.05); }
+  70%  { transform: translateX(-2px) rotate(1deg); }
+  100% { transform: translateX(0) scale(1); }
+}
+.ws-progress {
+  margin-top: 12px;
+  font-size: 12px;
+  font-weight: 900;
+  text-align: center;
+  background: linear-gradient(90deg, var(--coeduca-stroke) 0%, #2d2d2d 100%);
+  color: var(--coeduca-primary);
+  border-radius: 50px;
+  padding: 5px 12px;
+  letter-spacing: 1.5px;
+  border: 2px solid var(--coeduca-stroke);
+  box-shadow: inset 0 0 0 1px rgba(255,215,0,0.3);
+  position: relative;
+  z-index: 1;
+}
+
+/* En pantallas estrechas: stack vertical y grid usa todo el ancho */
+@media (max-width: 600px) {
+  .ws-grid-wrap { flex-direction: column; }
+  .ws-grid { max-width: 100%; width: 100%; flex: none; }
+  .ws-list { width: 100%; flex: none; }
+}
+
+/* ===== UTILITY ===== */
+.coeduca-hidden { display: none !important; }
+.coeduca-row { display: flex; flex-wrap: wrap; gap: 10px; }
+.coeduca-center { text-align: center; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 480px) {
+  .coeduca-app { padding: 14px 10px 130px; }
+  .coeduca-exercise { padding: 16px 14px; }
+  .coeduca-extra-badge { font-size: 12px; padding: 6px 10px; top: 8px; left: 8px; }
+  .coeduca-header h1 { letter-spacing: 1px; }
+  .coeduca-final-score .score-number { font-size: 42px; }
+}
+
+/* Animación para indicar que la zona es válida para soltar */
+.coeduca-drop-hover {
+  background: #FFF59D !important; /* Amarillo brillante */
+  border-color: var(--coeduca-primary) !important;
+  transform: scale(1.05);
+  transition: all 0.15s ease;
+  box-shadow: 0 0 8px var(--coeduca-primary);
+}
+
+/* ============================================================
+   MEJORAS POP ART "WOW" — adiciones globales
+   No tocan la lógica existente; solo enriquecen lo visual.
+   ============================================================ */
+
+/* --- Halftone de fondo respira (muy lento, casi imperceptible) --- */
+@keyframes coeducaHalftoneBreathe {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.78; }
+}
+body::before {
+  animation: coeducaHalftoneBreathe 14s ease-in-out infinite;
+}
+
+/* --- Rayos diagonales del header rotan muy despacio --- */
+@keyframes coeducaRaysSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+body::after {
+  animation: coeducaRaysSpin 90s linear infinite;
+  transform-origin: 50% 50%;
+}
+
+/* --- Tarjetas de ejercicio: tilt sutil + glow al hover --- */
+.coeduca-exercise {
+  transition:
+    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.35s ease;
+  will-change: transform;
+}
+@media (hover: hover) {
+  .coeduca-exercise:hover {
+    transform: translate(-2px, -3px) rotate(-0.25deg);
+    box-shadow:
+      7px 8px 0 var(--coeduca-stroke),
+      0 0 0 4px rgba(255, 215, 0, 0.18);
+  }
+}
+
+/* Halftone más visible al pasar sobre la tarjeta */
+.coeduca-exercise::before {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+@media (hover: hover) {
+  .coeduca-exercise:hover::before {
+    opacity: 0.75;
+    transform: scale(1.1) rotate(8deg);
+  }
+}
+
+/* --- Botones: brillo "shine" al pasar el mouse --- */
+.coeduca-btn {
+  overflow: hidden;
+}
+.coeduca-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.45) 50%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  pointer-events: none;
+  transition: left 0.55s ease;
+}
+@media (hover: hover) {
+  .coeduca-btn:hover::after { left: 130%; }
+}
+
+/* --- Título del ejercicio "ondula" muy sutil --- */
+@keyframes coeducaTitleWobble {
+  0%, 100% { transform: rotate(-1.5deg); }
+  50%      { transform: rotate(-2.5deg) translateY(-1px); }
+}
+.coeduca-exercise-title {
+  animation: coeducaTitleWobble 3.6s ease-in-out infinite;
+  transform-origin: left center;
+}
+
+/* --- Input con borde "marker" pulsante al focus --- */
+@keyframes coeducaFocusGlow {
+  0%, 100% { box-shadow: 3px 3px 0 var(--coeduca-stroke), 0 0 0 0 rgba(255, 107, 157, 0.0); }
+  50%      { box-shadow: 3px 3px 0 var(--coeduca-stroke), 0 0 0 5px rgba(255, 107, 157, 0.18); }
+}
+.coeduca-input:focus {
+  animation: coeducaFocusGlow 1.6s ease-in-out infinite;
+}
+
+/* --- Feedback (OK / X) con burst --- */
+.coeduca-feedback {
+  display: inline-block;
+  font-weight: 900;
+  font-size: 14px;
+  margin-left: 8px;
+  padding: 2px 8px;
+  border-radius: 50px;
+  border: 2px solid var(--coeduca-stroke);
+  text-shadow: 1px 1px 0 var(--coeduca-stroke);
+  animation: coeducaFeedbackPop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.coeduca-feedback.correct {
+  background: var(--coeduca-success);
+  color: #fff;
+  box-shadow: 2px 2px 0 var(--coeduca-stroke);
+}
+.coeduca-feedback.wrong {
+  background: var(--coeduca-error);
+  color: #fff;
+  box-shadow: 2px 2px 0 var(--coeduca-stroke);
+}
+@keyframes coeducaFeedbackPop {
+  0%   { transform: scale(0) rotate(-180deg); opacity: 0; }
+  60%  { transform: scale(1.25) rotate(10deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+
+/* --- Header h1: los caracteres "vibran" con un parpadeo de color al hover --- */
+@media (hover: hover) {
+  .coeduca-header:hover h1 {
+    animation: coeducaH1Shake 0.4s ease;
+  }
+}
+@keyframes coeducaH1Shake {
+  0%, 100% { transform: translate(0, 0); }
+  20%      { transform: translate(-2px, 1px); }
+  40%      { transform: translate(2px, -1px); }
+  60%      { transform: translate(-1px, 2px); }
+  80%      { transform: translate(1px, -2px); }
+}
+
+/* --- Burst circle del header pulsa --- */
+@keyframes coeducaHeaderBurst {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  50%      { transform: scale(1.08) rotate(8deg); }
+}
+.coeduca-header::after {
+  animation: coeducaHeaderBurst 4s ease-in-out infinite;
+}
+
+/* --- Note: "!" en el círculo amarillo gira al hover --- */
+.coeduca-note::before {
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@media (hover: hover) {
+  .coeduca-note:hover::before {
+    transform: rotate(20deg) scale(1.15);
+  }
+}
+
+/* --- Audio button rebote "alegre" --- */
+@keyframes coeducaAudioBounce {
+  0%, 100% { transform: scale(1); }
+  30%      { transform: scale(1.12) rotate(-3deg); }
+  60%      { transform: scale(0.96) rotate(2deg); }
+}
+.coeduca-audio-btn.coeduca-playing {
+  animation: coeducaAudioBounce 0.9s ease-in-out infinite;
+}
+
+/* --- Ben-day dots como "respiración" en exercise --- */
+@keyframes coeducaDotsBreathe {
+  0%, 100% { opacity: 0.45; }
+  50%      { opacity: 0.65; }
+}
+.coeduca-exercise::before {
+  animation: coeducaDotsBreathe 5s ease-in-out infinite;
+}
+
+/* --- Reduce motion: respeta al usuario --- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

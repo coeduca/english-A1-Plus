@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html translate="no" lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="google" content="notranslate">
+  <meta http-equiv="Content-Language" content="es">
+  <title>Wh Questions with Simple Past - Noveno / Primer Año / Segundo Año</title>
+  <link rel="stylesheet" href="coeduca-core.css">
+  <link rel="icon" href="favicon.png" type="image/png">
+</head>
+<body>
+  <div id="app"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="students.js"></script>
+  <script src="rigo.js"></script>
+  <script src="coeduca-core.js"></script>
+  <script src="coeduca-exercises.js"></script>
+  <script src="coeduca-games.js"></script>
+  <rigo-mascot></rigo-mascot>
+  <script>
+    COEDUCA.init({
+      container: '#app',
+      topic: 'Wh Questions with Simple Past',
+      level: 'Noveno / Primer Año / Segundo Año',
+      pdfDesign: 'PopArtVibrant',
+      colors: { primary: '#FF4FA3', accent: '#FFD93D', bg: '#7FE7DC' },
+      exercises: [
+        {
+          type: 'note',
+          html: '<h3>Wh- Questions with Simple Past</h3><p>We use <b>Wh- words</b> (What, Where, When, Why, Who, How) to ask for specific information. In the <b>simple past</b>, we use the auxiliary <b>did</b> + subject + base verb.</p><p><b>Structure:</b> Wh- + did + subject + base verb + ...?</p><ul><li><b>What</b> did you eat yesterday? → I ate pizza.</li><li><b>Where</b> did she go last weekend? → She went to the beach.</li><li><b>When</b> did they arrive? → They arrived at 8 p.m.</li><li><b>Why</b> did he cry? → Because he was sad.</li><li><b>Who</b> did you meet? → I met my cousin.</li><li><b>How</b> did you travel? → I traveled by bus.</li></ul><p><b>Note:</b> With the verb <i>to be</i>, we do NOT use <i>did</i>. Use <b>was/were</b> instead. Example: <i>Where were you yesterday?</i></p>'
+        },
+        {
+          type: 'multiplechoice',
+          title: 'Choose the correct Wh- word',
+          instruction: 'Read each question and select the correct Wh- word to complete it.',
+          dataA: [
+            { q: '___ did you go last summer? — I went to the beach.', options: ['Where', 'What', 'Who'], answer: 0 },
+            { q: '___ did she eat for breakfast? — She ate cereal.', options: ['When', 'What', 'Why'], answer: 1 },
+            { q: '___ did the movie start? — It started at 7 p.m.', options: ['How', 'Who', 'When'], answer: 2 },
+            { q: '___ did he call yesterday? — He called his mother.', options: ['Who', 'Where', 'What'], answer: 0 },
+            { q: '___ did you travel to school? — I traveled by bike.', options: ['Why', 'How', 'When'], answer: 1 },
+            { q: '___ did they leave early? — Because they were tired.', options: ['What', 'Where', 'Why'], answer: 2 },
+            { q: '___ did you buy at the store? — I bought milk and bread.', options: ['What', 'Who', 'How'], answer: 0 },
+            { q: '___ did the party finish? — It finished at midnight.', options: ['Where', 'When', 'Who'], answer: 1 }
+          ],
+          dataB: [
+            { q: '___ did your sister study last night? — She studied math.', options: ['Where', 'What', 'How'], answer: 1 },
+            { q: '___ did you visit your grandparents? — Last Sunday.', options: ['When', 'Why', 'Who'], answer: 0 },
+            { q: '___ did the children play with? — They played with their cousins.', options: ['What', 'Who', 'Where'], answer: 1 },
+            { q: '___ did you feel sad? — Because I lost my keys.', options: ['How', 'When', 'Why'], answer: 2 },
+            { q: '___ did Mark park the car? — In front of the house.', options: ['Where', 'What', 'Who'], answer: 0 },
+            { q: '___ did you cook the chicken? — I cooked it in the oven.', options: ['Why', 'How', 'When'], answer: 1 },
+            { q: '___ did you do last weekend? — I went hiking.', options: ['Who', 'What', 'Where'], answer: 1 },
+            { q: '___ did the teacher arrive? — She arrived at 8:00.', options: ['When', 'Why', 'How'], answer: 0 }
+          ]
+        },
+        {
+          type: 'matchlines',
+          title: 'Match the question with its answer',
+          instruction: 'Look at the images for clues. Match each Wh- question with the correct past-tense answer.',
+          image: 'files/woman-thinking.avif',
+          dataA: [
+            { left: 'What did the boy do?', right: 'He washed the dishes.' },
+            { left: 'Where did the man work?', right: 'He worked in an office.' },
+            { left: 'Who cooked the meal?', right: 'The chef did.' },
+            { left: 'What did the child play?', right: 'He played the guitar.' },
+            { left: 'Why did she go to the hospital?', right: 'Because she broke a bone.' },
+            { left: 'What did the man throw?', right: 'He threw a ball.' },
+            { left: 'How did the fly move?', right: 'It flew away.' }
+          ],
+          dataB: [
+            { left: 'When did you arrive home?', right: 'I arrived at 9 p.m.' },
+            { left: 'Where did they travel last year?', right: 'They traveled to Mexico.' },
+            { left: 'Who did you meet at the party?', right: 'I met my best friend.' },
+            { left: 'Why did he stay home?', right: 'Because he felt sick.' },
+            { left: 'How did she learn English?', right: 'She learned by watching movies.' },
+            { left: 'What did you buy yesterday?', right: 'I bought a new backpack.' },
+            { left: 'When did the class start?', right: 'It started at 7:30 a.m.' }
+          ]
+        },
+        {
+          type: 'matchimage',
+          title: 'Match the question with the correct picture',
+          instruction: 'Read each Wh- question and match it with the image that answers it.',
+          dataA: [
+            { word: 'What did the girl do?', image: 'files/girl-washing-dishes.png' },
+            { word: 'What did the boy do?', image: 'files/boy-washing-dishes.webp' },
+            { word: 'What did the chef do?', image: 'files/man-chef-cooking.avif' },
+            { word: 'What did the man do?', image: 'files/a-man-playing-about-to-throw-a-ball.webp' },
+            { word: 'What did the child do?', image: 'files/child-playing-guitar.avif' },
+            { word: 'What happened to his arm?', image: 'files/a-broken-bone.jpg' }
+          ],
+          dataB: [
+            { word: 'Where did the man work?', image: 'files/man-on-a-laptop-office.avif' },
+            { word: 'What did the fly do?', image: 'files/a-fly-flying.jpg' },
+            { word: 'What did the girl think about?', image: 'files/girl-thinking.avif' },
+            { word: 'What did the woman wonder?', image: 'files/woman-thinking.avif' },
+            { word: 'What did the chef prepare?', image: 'files/man-chef-cooking.avif' },
+            { word: 'What did the boy play?', image: 'files/child-playing-guitar.avif' }
+          ]
+        },
+        {
+          type: 'dragbank',
+          title: 'Complete the Wh- questions',
+          instruction: 'Drag the correct Wh- word or auxiliary into each blank to form past questions.',
+          dataA: {
+            sentences: [
+              { text: '___ did you go last weekend?', answer: 'Where' },
+              { text: '___ did she eat at the party?', answer: 'What' },
+              { text: '___ did the train arrive?', answer: 'When' },
+              { text: '___ did he cry yesterday?', answer: 'Why' },
+              { text: '___ did you call this morning?', answer: 'Who' },
+              { text: '___ did they get home?', answer: 'How' },
+              { text: 'Where ___ you born?', answer: 'were' },
+              { text: 'What ___ your name in primary school?', answer: 'was' }
+            ],
+            bank: ['Which', 'are', 'do']
+          },
+          dataB: {
+            sentences: [
+              { text: '___ did your family travel in summer?', answer: 'Where' },
+              { text: '___ did you study last night?', answer: 'What' },
+              { text: '___ did the movie finish?', answer: 'When' },
+              { text: '___ did she leave early?', answer: 'Why' },
+              { text: '___ did you visit on Sunday?', answer: 'Who' },
+              { text: '___ did he prepare the cake?', answer: 'How' },
+              { text: 'Where ___ you yesterday?', answer: 'were' },
+              { text: 'Who ___ your best friend in school?', answer: 'was' }
+            ],
+            bank: ['does', 'is', 'Whose']
+          }
+        },
+        {
+          type: 'reorder_sentences',
+          title: 'Reorder the words to form Wh- questions',
+          instruction: 'Arrange the words in the correct order to make a past-tense Wh- question.',
+          dataA: [
+            { sentence: 'What did you do yesterday', es: '¿Qué hiciste ayer?' },
+            { sentence: 'Where did she go last night', es: '¿A dónde fue ella anoche?' },
+            { sentence: 'When did the party start', es: '¿Cuándo empezó la fiesta?' },
+            { sentence: 'Why did he leave early', es: '¿Por qué se fue temprano?' },
+            { sentence: 'Who did you meet at school', es: '¿A quién conociste en la escuela?' },
+            { sentence: 'How did they travel to Paris', es: '¿Cómo viajaron a París?' },
+            { sentence: 'What did your mom cook', es: '¿Qué cocinó tu mamá?' }
+          ],
+          dataB: [
+            { sentence: 'Where did your brother study', es: '¿Dónde estudió tu hermano?' },
+            { sentence: 'When did you wake up today', es: '¿Cuándo te levantaste hoy?' },
+            { sentence: 'Why did the dog bark', es: '¿Por qué ladró el perro?' },
+            { sentence: 'Who did she invite to dinner', es: '¿A quién invitó a cenar?' },
+            { sentence: 'How did you fix the bike', es: '¿Cómo arreglaste la bicicleta?' },
+            { sentence: 'What did the teacher say', es: '¿Qué dijo el profesor?' },
+            { sentence: 'Where did they buy the food', es: '¿Dónde compraron la comida?' }
+          ]
+        },
+        {
+          type: 'spoterror',
+          title: 'Spot and fix the mistake',
+          instruction: 'Each question has ONE error. Click the wrong word and write the correct form.',
+          dataA: [
+            { words: ['What', 'did', 'you', 'ate', 'yesterday', '?'], errorIndex: 3, fix: 'eat' },
+            { words: ['Where', 'you', 'did', 'go', 'last', 'night', '?'], errorIndex: 1, fix: 'did' },
+            { words: ['Why', 'did', 'he', 'cried', 'so', 'much', '?'], errorIndex: 3, fix: 'cry' },
+            { words: ['When', 'did', 'they', 'arrives', 'home', '?'], errorIndex: 3, fix: 'arrive' },
+            { words: ['Who', 'do', 'you', 'meet', 'last', 'week', '?'], errorIndex: 1, fix: 'did' },
+            { words: ['How', 'did', 'she', 'learns', 'French', '?'], errorIndex: 3, fix: 'learn' },
+            { words: ['What', 'did', 'your', 'sister', 'bought', '?'], errorIndex: 4, fix: 'buy' }
+          ],
+          dataB: [
+            { words: ['Where', 'did', 'you', 'went', 'on', 'vacation', '?'], errorIndex: 3, fix: 'go' },
+            { words: ['What', 'she', 'did', 'do', 'on', 'Sunday', '?'], errorIndex: 1, fix: 'did' },
+            { words: ['When', 'did', 'the', 'class', 'started', '?'], errorIndex: 4, fix: 'start' },
+            { words: ['Why', 'did', 'you', 'leaved', 'early', '?'], errorIndex: 3, fix: 'leave' },
+            { words: ['How', 'did', 'he', 'got', 'home', '?'], errorIndex: 3, fix: 'get' },
+            { words: ['Who', 'did', 'they', 'invited', 'to', 'dinner', '?'], errorIndex: 3, fix: 'invite' },
+            { words: ['What', 'did', 'you', 'saw', 'at', 'the', 'park', '?'], errorIndex: 3, fix: 'see' }
+          ]
+        },
+        {
+          type: 'wordsearch',
+          title: 'Wh- Words & Past Verbs Wordsearch',
+          instruction: 'Find the Wh- question words and common past-tense verbs in the grid.',
+          dataA: {
+            words: ['WHAT', 'WHERE', 'WHEN', 'WHY', 'WHO', 'HOW', 'WENT', 'ATE', 'SAW', 'DID'],
+            gridSize: 13
+          },
+          dataB: {
+            words: ['WHICH', 'WHOSE', 'WHERE', 'WHEN', 'WHY', 'BOUGHT', 'TOOK', 'GAVE', 'MADE', 'WAS'],
+            gridSize: 13
+          }
+        }
+      ],
+      game: {
+        type: 'hangman',
+        words: ['QUE', 'DONDE', 'CUANDO', 'POR QUE', 'QUIEN', 'COMO', 'PASADO', 'PREGUNTA', 'AYER', 'SEMANA', 'MES', 'VACACIONES', 'ESCUELA', 'AMIGO', 'FAMILIA', 'COCINAR', 'ESTUDIAR', 'VIAJAR', 'JUGAR', 'COMER']
+      }
+    });
+  </script>
+</body>
+</html>
