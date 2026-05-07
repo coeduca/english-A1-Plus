@@ -1,0 +1,1405 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ruleta COEDUCA · Selector de Estudiantes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,500&family=JetBrains+Mono:wght@400;600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ============ RESET & BASE ============ */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg-deep: #0a0e1a;
+    --bg-mid: #131829;
+    --bg-soft: #1a2138;
+    --ink: #f4ecd8;
+    --ink-mute: #a8a394;
+    --gold: #d4a574;
+    --gold-bright: #f4c989;
+    --coral: #ff6b6b;
+    --teal: #5eead4;
+    --violet: #c4b5fd;
+    --rose: #fb7185;
+    --amber: #fbbf24;
+    --green: #86efac;
+    --sky: #7dd3fc;
+    --pink: #f9a8d4;
+    --line: rgba(244, 236, 216, 0.12);
+    --shadow-1: 0 4px 12px rgba(0,0,0,0.25);
+    --shadow-2: 0 12px 40px rgba(0,0,0,0.5);
+    --shadow-glow: 0 0 60px rgba(212, 165, 116, 0.25);
+  }
+
+  html, body {
+    height: 100%;
+    background: var(--bg-deep);
+    color: var(--ink);
+    font-family: 'Outfit', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* Atmospheric background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(circle at 15% 20%, rgba(212, 165, 116, 0.15), transparent 40%),
+      radial-gradient(circle at 85% 80%, rgba(94, 234, 212, 0.1), transparent 40%),
+      radial-gradient(circle at 50% 50%, rgba(196, 181, 253, 0.08), transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+    opacity: 0.04;
+    pointer-events: none;
+    z-index: 1;
+    mix-blend-mode: overlay;
+  }
+
+  /* ============ HEADER ============ */
+  .topbar {
+    position: relative;
+    z-index: 10;
+    padding: 28px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .brand-mark {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, var(--gold), var(--coral), var(--teal), var(--violet), var(--gold));
+    display: grid;
+    place-items: center;
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    color: var(--bg-deep);
+    font-size: 18px;
+    box-shadow: var(--shadow-glow);
+    animation: rotateMark 12s linear infinite;
+  }
+
+  @keyframes rotateMark {
+    to { transform: rotate(360deg); }
+  }
+
+  .brand-mark span {
+    background: var(--bg-deep);
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    color: var(--gold-bright);
+    animation: rotateMark 12s linear infinite reverse;
+  }
+
+  .brand-text {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 17px;
+    letter-spacing: 0.5px;
+  }
+
+  .brand-text small {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--ink-mute);
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  .topbar-right {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    color: var(--ink-mute);
+    text-transform: uppercase;
+  }
+
+  .topbar-right .dot {
+    display: inline-block;
+    width: 6px; height: 6px;
+    background: var(--green);
+    border-radius: 50%;
+    margin-right: 8px;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  /* ============ MAIN LAYOUT ============ */
+  main {
+    position: relative;
+    z-index: 5;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px;
+  }
+
+  /* ============ HERO / SELECTION ============ */
+  .hero {
+    text-align: center;
+    margin: 30px 0 60px;
+    animation: fadeUp 0.8s ease-out;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .eyebrow::before, .eyebrow::after {
+    content: '·';
+    margin: 0 12px;
+    color: var(--ink-mute);
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: clamp(48px, 8vw, 96px);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 24px;
+  }
+
+  h1 em {
+    font-style: italic;
+    font-weight: 500;
+    background: linear-gradient(135deg, var(--gold-bright), var(--coral));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .lede {
+    font-size: 17px;
+    color: var(--ink-mute);
+    max-width: 540px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* ============ GRADE GRID ============ */
+  .grade-section {
+    margin-top: 60px;
+  }
+
+  .grade-section-title {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--ink-mute);
+    text-transform: uppercase;
+  }
+
+  .grade-section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, var(--line), transparent);
+  }
+
+  .grade-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+  }
+
+  .grade-card {
+    position: relative;
+    background: linear-gradient(135deg, var(--bg-mid), var(--bg-soft));
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 28px;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    overflow: hidden;
+    text-align: left;
+    color: inherit;
+    font-family: inherit;
+  }
+
+  .grade-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(212, 165, 116, 0.2), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s;
+    pointer-events: none;
+  }
+
+  .grade-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--gold);
+    box-shadow: var(--shadow-2), var(--shadow-glow);
+  }
+
+  .grade-card:hover::before {
+    opacity: 1;
+  }
+
+  .grade-card-num {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: 64px;
+    line-height: 1;
+    color: var(--gold);
+    margin-bottom: 4px;
+    font-style: italic;
+  }
+
+  .grade-card-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 24px;
+    letter-spacing: -0.01em;
+    margin-bottom: 6px;
+  }
+
+  .grade-card-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    color: var(--ink-mute);
+    text-transform: uppercase;
+  }
+
+  .grade-card-arrow {
+    position: absolute;
+    top: 28px;
+    right: 28px;
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    transition: all 0.4s;
+  }
+
+  .grade-card:hover .grade-card-arrow {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--bg-deep);
+    transform: rotate(-45deg);
+  }
+
+  /* ============ WHEEL VIEW ============ */
+  .wheel-view {
+    display: none;
+    animation: fadeUp 0.6s ease-out;
+  }
+
+  .wheel-view.active {
+    display: block;
+  }
+
+  .wheel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+
+  .back-btn {
+    background: none;
+    border: 1px solid var(--line);
+    color: var(--ink);
+    padding: 10px 18px;
+    border-radius: 100px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .back-btn:hover {
+    background: var(--ink);
+    color: var(--bg-deep);
+  }
+
+  .wheel-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: clamp(36px, 5vw, 60px);
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  .wheel-title em {
+    font-style: italic;
+    font-weight: 500;
+    color: var(--gold-bright);
+  }
+
+  .wheel-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--ink-mute);
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+
+  .controls {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .ctrl-btn {
+    background: rgba(244, 236, 216, 0.05);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    padding: 12px 20px;
+    border-radius: 100px;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .ctrl-btn:hover {
+    background: rgba(244, 236, 216, 0.1);
+    border-color: var(--gold);
+  }
+
+  .ctrl-btn.active {
+    background: var(--gold);
+    color: var(--bg-deep);
+    border-color: var(--gold);
+  }
+
+  /* ============ WHEEL CONTAINER ============ */
+  .wheel-stage {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 40px;
+    align-items: start;
+  }
+
+  @media (max-width: 900px) {
+    .wheel-stage { grid-template-columns: 1fr; }
+  }
+
+  .wheel-container {
+    position: relative;
+    aspect-ratio: 1;
+    max-width: 640px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .wheel-svg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(0deg);
+    transition: transform 5s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+    filter: drop-shadow(0 20px 40px rgba(0,0,0,0.4));
+  }
+
+  .wheel-svg.spinning {
+    /* transition handled inline by JS */
+  }
+
+  .pointer {
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 64px;
+    z-index: 5;
+    filter: drop-shadow(0 6px 12px rgba(0,0,0,0.5));
+  }
+
+  .pointer svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .wheel-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    z-index: 4;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4), inset 0 -4px 8px rgba(0,0,0,0.2), inset 0 4px 8px rgba(255,255,255,0.3);
+    transition: transform 0.2s;
+    border: 4px solid var(--bg-deep);
+  }
+
+  .wheel-center:hover {
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+
+  .wheel-center:active {
+    transform: translate(-50%, -50%) scale(0.95);
+  }
+
+  .wheel-center.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  .wheel-center span {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-style: italic;
+    color: var(--bg-deep);
+    font-size: 18px;
+    letter-spacing: -0.02em;
+  }
+
+  /* ============ SIDEBAR ============ */
+  .sidebar {
+    background: var(--bg-mid);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 28px;
+    position: sticky;
+    top: 20px;
+  }
+
+  .sidebar-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    color: var(--ink-mute);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .stat {
+    background: var(--bg-deep);
+    border-radius: 14px;
+    padding: 16px;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 32px;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    color: var(--ink-mute);
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+
+  .student-list {
+    max-height: 380px;
+    overflow-y: auto;
+    border-top: 1px solid var(--line);
+    padding-top: 16px;
+  }
+
+  .student-list::-webkit-scrollbar { width: 4px; }
+  .student-list::-webkit-scrollbar-track { background: transparent; }
+  .student-list::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+
+  .student-item {
+    padding: 8px 0;
+    font-size: 13px;
+    color: var(--ink-mute);
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: color 0.3s;
+  }
+
+  .student-item:last-child {
+    border-bottom: none;
+  }
+
+  .student-item.active {
+    color: var(--gold-bright);
+    font-weight: 500;
+  }
+
+  .student-item.removed {
+    text-decoration: line-through;
+    opacity: 0.4;
+  }
+
+  .student-item .badge {
+    background: var(--coral);
+    color: white;
+    font-size: 9px;
+    padding: 2px 6px;
+    border-radius: 8px;
+    font-weight: 600;
+  }
+
+  /* ============ RESULT MODAL ============ */
+  .result-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 14, 26, 0.85);
+    backdrop-filter: blur(20px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    animation: fadeIn 0.4s;
+  }
+
+  .result-overlay.active {
+    display: flex;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .result-card {
+    background: linear-gradient(135deg, var(--bg-mid), var(--bg-soft));
+    border: 1px solid var(--gold);
+    border-radius: 28px;
+    padding: 60px 50px;
+    text-align: center;
+    max-width: 500px;
+    width: 90%;
+    position: relative;
+    animation: popIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: var(--shadow-2), var(--shadow-glow);
+  }
+
+  @keyframes popIn {
+    from { opacity: 0; transform: scale(0.8) translateY(40px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  .result-card::before {
+    content: '✦';
+    position: absolute;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--gold);
+    font-size: 24px;
+  }
+
+  .result-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .result-name {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(36px, 6vw, 56px);
+    line-height: 1.05;
+    background: linear-gradient(135deg, var(--gold-bright), var(--coral));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 20px;
+    letter-spacing: -0.02em;
+  }
+
+  .result-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--ink-mute);
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+
+  .result-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .result-btn {
+    padding: 14px 28px;
+    border-radius: 100px;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+    cursor: pointer;
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--ink);
+    transition: all 0.3s;
+  }
+
+  .result-btn:hover {
+    background: rgba(244, 236, 216, 0.1);
+  }
+
+  .result-btn.primary {
+    background: var(--gold);
+    color: var(--bg-deep);
+    border-color: var(--gold);
+    font-weight: 600;
+  }
+
+  .result-btn.primary:hover {
+    background: var(--gold-bright);
+  }
+
+  /* ============ CONFIG MODAL ============ */
+  .config-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 14, 26, 0.85);
+    backdrop-filter: blur(20px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 99;
+    animation: fadeIn 0.3s;
+  }
+
+  .config-overlay.active {
+    display: flex;
+  }
+
+  .config-card {
+    background: var(--bg-mid);
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    padding: 40px;
+    max-width: 480px;
+    width: 90%;
+    animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .config-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 32px;
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+  }
+
+  .config-subtitle {
+    font-size: 14px;
+    color: var(--ink-mute);
+    margin-bottom: 32px;
+    line-height: 1.5;
+  }
+
+  .toggle-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .toggle-row:last-of-type {
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 32px;
+  }
+
+  .toggle-label {
+    flex: 1;
+    padding-right: 20px;
+  }
+
+  .toggle-label-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 17px;
+    margin-bottom: 4px;
+  }
+
+  .toggle-label-desc {
+    font-size: 13px;
+    color: var(--ink-mute);
+    line-height: 1.5;
+  }
+
+  .toggle {
+    position: relative;
+    width: 52px;
+    height: 30px;
+    background: var(--bg-deep);
+    border-radius: 100px;
+    cursor: pointer;
+    transition: background 0.3s;
+    border: 1px solid var(--line);
+    flex-shrink: 0;
+  }
+
+  .toggle.on {
+    background: var(--gold);
+    border-color: var(--gold);
+  }
+
+  .toggle::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--ink);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .toggle.on::after {
+    background: var(--bg-deep);
+    transform: translateX(22px);
+  }
+
+  .config-actions {
+    display: flex;
+    gap: 12px;
+  }
+
+  .config-actions .result-btn {
+    flex: 1;
+  }
+
+  /* ============ CONFETTI ============ */
+  .confetti-piece {
+    position: fixed;
+    width: 10px;
+    height: 14px;
+    z-index: 200;
+    pointer-events: none;
+    will-change: transform;
+  }
+
+  /* ============ MOBILE ============ */
+  @media (max-width: 640px) {
+    .topbar { padding: 20px; }
+    main { padding: 20px; }
+    .wheel-header { flex-direction: column; align-items: flex-start; }
+    .topbar-right { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-mark"><span>C</span></div>
+    <div class="brand-text">
+      COEDUCA
+      <small>Ruleta · Selector</small>
+    </div>
+  </div>
+  <div class="topbar-right">
+    <span class="dot"></span>Listo para girar
+  </div>
+</header>
+
+<main>
+  <!-- =============== VIEW 1: GRADE SELECTION =============== -->
+  <section id="selectionView">
+    <div class="hero">
+      <div class="eyebrow">Dinámicas en Clase</div>
+      <h1>Una <em>ruleta</em> para<br>cada aula</h1>
+      <p class="lede">Selecciona el grado al que pertenece tu clase y deja que la suerte elija al estudiante perfecto para tu próxima dinámica.</p>
+    </div>
+
+    <div class="grade-section">
+      <div class="grade-section-title">Tercer Ciclo</div>
+      <div class="grade-grid" id="gradeGrid1"></div>
+    </div>
+
+    <div class="grade-section">
+      <div class="grade-section-title">Bachillerato</div>
+      <div class="grade-grid" id="gradeGrid2"></div>
+    </div>
+
+    <div class="grade-section">
+      <div class="grade-section-title">Especiales</div>
+      <div class="grade-grid" id="gradeGrid3"></div>
+    </div>
+  </section>
+
+  <!-- =============== VIEW 2: WHEEL =============== -->
+  <section id="wheelView" class="wheel-view">
+    <div class="wheel-header">
+      <div>
+        <button class="back-btn" id="backBtn">← Cambiar aula</button>
+        <h2 class="wheel-title" style="margin-top: 16px;">Ruleta de <em id="currentGradeName">—</em></h2>
+        <div class="wheel-meta" id="currentGradeMeta">— estudiantes</div>
+      </div>
+      <div class="controls">
+        <button class="ctrl-btn" id="configBtn">⚙ Configurar</button>
+        <button class="ctrl-btn" id="resetBtn">↻ Reiniciar</button>
+      </div>
+    </div>
+
+    <div class="wheel-stage">
+      <div class="wheel-container">
+        <div class="pointer">
+          <svg viewBox="0 0 50 64" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="ptrGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#f4c989"/>
+                <stop offset="100%" stop-color="#d4a574"/>
+              </linearGradient>
+            </defs>
+            <path d="M25 60 L5 10 Q25 0 45 10 Z" fill="url(#ptrGrad)" stroke="#0a0e1a" stroke-width="2"/>
+            <circle cx="25" cy="14" r="4" fill="#0a0e1a"/>
+          </svg>
+        </div>
+        <svg class="wheel-svg" id="wheel" viewBox="-200 -200 400 400" xmlns="http://www.w3.org/2000/svg"></svg>
+        <div class="wheel-center" id="spinBtn"><span>GIRAR</span></div>
+      </div>
+
+      <aside class="sidebar">
+        <div class="sidebar-title">Estado de la ruleta</div>
+        <div class="stats-row">
+          <div class="stat">
+            <div class="stat-num" id="statTotal">0</div>
+            <div class="stat-label">En la ruleta</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num" id="statRemoved">0</div>
+            <div class="stat-label">Eliminados</div>
+          </div>
+        </div>
+        <div class="sidebar-title">Lista de estudiantes</div>
+        <div class="student-list" id="studentList"></div>
+      </aside>
+    </div>
+  </section>
+</main>
+
+<!-- =============== RESULT MODAL =============== -->
+<div class="result-overlay" id="resultOverlay">
+  <div class="result-card">
+    <div class="result-eyebrow">✦ La suerte ha elegido a ✦</div>
+    <div class="result-name" id="resultName">—</div>
+    <div class="result-meta" id="resultMeta">—</div>
+    <div class="result-actions">
+      <button class="result-btn" id="resultClose">Cerrar</button>
+      <button class="result-btn primary" id="resultSpinAgain">Girar de nuevo</button>
+    </div>
+  </div>
+</div>
+
+<!-- =============== CONFIG MODAL =============== -->
+<div class="config-overlay" id="configOverlay">
+  <div class="config-card">
+    <div class="config-title">Configurar ruleta</div>
+    <div class="config-subtitle">Ajusta el comportamiento de la ruleta para esta aula. Los cambios se aplican al instante.</div>
+
+    <div class="toggle-row">
+      <div class="toggle-label">
+        <div class="toggle-label-title">Eliminar al ganador</div>
+        <div class="toggle-label-desc">El estudiante que sale es retirado de la ruleta para no repetirlo en próximos giros.</div>
+      </div>
+      <div class="toggle" id="toggleRemove"></div>
+    </div>
+
+    <div class="toggle-row">
+      <div class="toggle-label">
+        <div class="toggle-label-title">Duplicar estudiantes</div>
+        <div class="toggle-label-desc">Cada estudiante aparece dos veces en la ruleta, duplicando sus probabilidades.</div>
+      </div>
+      <div class="toggle" id="toggleDouble"></div>
+    </div>
+
+    <div class="config-actions">
+      <button class="result-btn primary" id="configClose">Listo</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============ STUDENT DATA ============
+const STUDENTS = {
+  "1999": { name: "José Eliseo Martínez", grade: "Maestro" },
+  "20176653": { name: "Karen Aguilero", grade: "Séptimo" }, "20176654": { name: "Moisés Alfaro", grade: "Séptimo" },
+  "20176658": { name: "Tania Barrera", grade: "Séptimo" }, "20316947": { name: "Gisselle Bonilla", grade: "Séptimo" },
+  "20176659": { name: "Adonay Castillo", grade: "Séptimo" }, "20182709": { name: "Esperanza Chirino", grade: "Séptimo" },
+  "20176660": { name: "Reyna Chirino", grade: "Séptimo" }, "20316949": { name: "Edwar Martínez", grade: "Séptimo" },
+  "20298183": { name: "Andrea Anzora", grade: "Séptimo" }, "20062372": { name: "Paola Serrano", grade: "Séptimo" },
+  "20298185": { name: "Víctor Flores", grade: "Séptimo" }, "20199089": { name: "Ariel Fuentes", grade: "Séptimo" },
+  "20182722": { name: "Daniela Henríquez", grade: "Séptimo" }, "20141583": { name: "Geovanny Jiménez", grade: "Séptimo" },
+  "20138865": { name: "Manuel Jiménez", grade: "Séptimo" }, "20298188": { name: "Génesis Maldonado", grade: "Séptimo" },
+  "20062488": { name: "Fredis Maravilla", grade: "Séptimo" }, "20182730": { name: "Cristofer Martínez", grade: "Séptimo" },
+  "20062492": { name: "Marlon Mena", grade: "Séptimo" }, "20298191": { name: "Enrique Paredes", grade: "Séptimo" },
+  "10000395": { name: "Valeria Portillo", grade: "Séptimo" }, "20298192": { name: "Naomi Ramírez", grade: "Séptimo" },
+  "20298195": { name: "Karla Ríos", grade: "Séptimo" }, "20298194": { name: "Marcela Rivas", grade: "Séptimo" },
+  "20176670": { name: "Azariel Rivas", grade: "Séptimo" }, "20316951": { name: "Axel Romero", grade: "Séptimo" },
+  "20171117": { name: "Arlette Sánchez", grade: "Séptimo" }, "20298196": { name: "Magdalena Servellón", grade: "Séptimo" },
+  "20176655": { name: "Genesis Martinez", grade: "Octavo" }, "20176656": { name: "Karen Barrera", grade: "Octavo" },
+  "20176657": { name: "Geremy Barrera", grade: "Octavo" }, "20176661": { name: "Gustavo Corvera", grade: "Octavo" },
+  "20138869": { name: "Diego Corvera", grade: "Octavo" }, "20176662": { name: "Pedro Corvera", grade: "Octavo" },
+  "20176663": { name: "Rafael Corvera", grade: "Octavo" }, "10065035": { name: "Justin Duran", grade: "Octavo" },
+  "20176664": { name: "Hector Gonzalez", grade: "Octavo" }, "20305579": { name: "Estiven Henriquez", grade: "Octavo" },
+  "20305581": { name: "Keily Manueles", grade: "Octavo" }, "20176667": { name: "Gisela Martinez", grade: "Octavo" },
+  "20176668": { name: "Osiel Martinez", grade: "Octavo" }, "20179890": { name: "Vladimir Mejia", grade: "Octavo" },
+  "20179891": { name: "Raul Melendez", grade: "Octavo" }, "20293665": { name: "Katherine Perez", grade: "Octavo" },
+  "20305583": { name: "Samuel Rivas", grade: "Octavo" },
+  "20062471": { name: "Diego Aguilero", grade: "Noveno" }, "19967142": { name: "Darwin Alfaro", grade: "Noveno" },
+  "19971566": { name: "Dayana Angulo", grade: "Noveno" }, "19971565": { name: "Yesenia Angulo", grade: "Noveno" },
+  "19967143": { name: "Marlon Barrera", grade: "Noveno" }, "20062474": { name: "Cesar David", grade: "Noveno" },
+  "19967145": { name: "Oscar Fuentes", grade: "Noveno" }, "19967146": { name: "Elizabeth Canas", grade: "Noveno" },
+  "19934096": { name: "Gisela Cordova", grade: "Noveno" }, "19934095": { name: "Ingrid Cordova", grade: "Noveno" },
+  "4210274":  { name: "Pedro Escamilla", grade: "Noveno" }, "20200673": { name: "Michel Escobar", grade: "Noveno" },
+  "20062484": { name: "Wendy Garcia", grade: "Noveno" }, "19934098": { name: "Adonay Hernandez", grade: "Noveno" },
+  "19967150": { name: "Anggie Lopez", grade: "Noveno" }, "20062486": { name: "Rosa Maldonado", grade: "Noveno" },
+  "20062489": { name: "Ernesto Martinez", grade: "Noveno" }, "19976021": { name: "Damary Martinez", grade: "Noveno" },
+  "20023247": { name: "Alexandra Monterroza", grade: "Noveno" }, "19976024": { name: "Anahy Munoz", grade: "Noveno" },
+  "20062495": { name: "Carolina Osorio", grade: "Noveno" }, "19956103": { name: "Griseida Perez", grade: "Noveno" },
+  "20062498": { name: "Silvia Ramos", grade: "Noveno" }, "19967154": { name: "Cesar Rivas", grade: "Noveno" },
+  "4210278":  { name: "Melisa Barahona", grade: "Primer Año" }, "4210264":  { name: "Jasmin Barahona", grade: "Primer Año" },
+  "19967144": { name: "Andrea Barrera", grade: "Primer Año" }, "20068438": { name: "Keiry Bonilla", grade: "Primer Año" },
+  "4210262":  { name: "Maria Luz Cordova", grade: "Primer Año" }, "19843597": { name: "Bryan Miguel Flores", grade: "Primer Año" },
+  "4210272":  { name: "Ernesto Fuentes", grade: "Primer Año" }, "19967158": { name: "Liliana Hernandez", grade: "Primer Año" },
+  "4210284":  { name: "Yeferson Maravilla", grade: "Primer Año" }, "19934099": { name: "Wilfredo Martinez", grade: "Primer Año" },
+  "19967161": { name: "Rocio Mejia", grade: "Primer Año" }, "19967151": { name: "Yaquelin Montano", grade: "Primer Año" },
+  "20062496": { name: "Katherinne Palma", grade: "Primer Año" }, "19788973": { name: "Alexandra Portillo", grade: "Primer Año" },
+  "3167629":  { name: "Keren Portillo", grade: "Primer Año" }, "19967163": { name: "Maria Jose", grade: "Primer Año" },
+  "4210259":  { name: "Kennedy Ramirez", grade: "Primer Año" }, "4210276":  { name: "Fernanda Rivas", grade: "Primer Año" },
+  "20062499": { name: "Wilian Rivera", grade: "Primer Año" }, "6954866":  { name: "Erika Rodriguez", grade: "Primer Año" },
+  "4210263":  { name: "Isaias Romero", grade: "Primer Año" },
+  "4210279":  { name: "Jose Maria Barrera", grade: "Segundo Año" }, "4210254":  { name: "Abel Barrera", grade: "Segundo Año" },
+  "2724749":  { name: "Maicol Barrera", grade: "Segundo Año" }, "6473557":  { name: "Estephany Berrios", grade: "Segundo Año" },
+  "6473562":  { name: "Amy Canas", grade: "Segundo Año" }, "19724473": { name: "Mauricio Cordova", grade: "Segundo Año" },
+  "6473555":  { name: "Oscar Kennedy", grade: "Segundo Año" }, "4210255":  { name: "Estiven Hernandez", grade: "Segundo Año" },
+  "1964480":  { name: "Juan David", grade: "Segundo Año" }, "4210256":  { name: "Yuleyde Lopez", grade: "Segundo Año" },
+  "5531752":  { name: "Cintia Martinez", grade: "Segundo Año" }, "4210268":  { name: "Wilmer Mejia", grade: "Segundo Año" },
+  "2295119":  { name: "Lisbeth Mejia", grade: "Segundo Año" }, "5531765":  { name: "Kevin Monterrosa", grade: "Segundo Año" },
+  "2294851":  { name: "Alfredo Osorio", grade: "Segundo Año" }, "19769235": { name: "Angel Quezada", grade: "Segundo Año" },
+  "19929938": { name: "Sophia Quinteros", grade: "Segundo Año" }, "4210277":  { name: "Leonel Rivera", grade: "Segundo Año" }
+};
+
+// ============ GRADE STRUCTURE ============
+const GRADE_GROUPS = {
+  ciclo: [
+    { id: "Séptimo", num: "07", name: "Séptimo Grado" },
+    { id: "Octavo", num: "08", name: "Octavo Grado" },
+    { id: "Noveno", num: "09", name: "Noveno Grado" },
+  ],
+  bachi: [
+    { id: "Primer Año", num: "1°", name: "Primer Año" },
+    { id: "Segundo Año", num: "2°", name: "Segundo Año" },
+  ],
+  esp: [
+    { id: "Maestro", num: "★", name: "Pruebas / Maestro" },
+  ]
+};
+
+// Wheel slice colors palette
+const PALETTE = ['#d4a574', '#5eead4', '#c4b5fd', '#fb7185', '#fbbf24', '#86efac', '#7dd3fc', '#f9a8d4', '#ff6b6b', '#a78bfa'];
+
+// ============ STATE ============
+let state = {
+  currentGrade: null,
+  allStudents: [],
+  activeStudents: [],
+  removedIds: new Set(),
+  config: { remove: false, double: false },
+  spinning: false,
+  rotation: 0,
+};
+
+// ============ INIT GRADE GRID ============
+function buildGradeGrid() {
+  const make = (group) => group.map(g => {
+    const count = Object.values(STUDENTS).filter(s => s.grade === g.id).length;
+    return `
+      <button class="grade-card" data-grade="${g.id}">
+        <div class="grade-card-num">${g.num}</div>
+        <div class="grade-card-title">${g.name}</div>
+        <div class="grade-card-meta">${count} estudiantes</div>
+        <div class="grade-card-arrow">→</div>
+      </button>`;
+  }).join('');
+
+  document.getElementById('gradeGrid1').innerHTML = make(GRADE_GROUPS.ciclo);
+  document.getElementById('gradeGrid2').innerHTML = make(GRADE_GROUPS.bachi);
+  document.getElementById('gradeGrid3').innerHTML = make(GRADE_GROUPS.esp);
+
+  document.querySelectorAll('.grade-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const rect = card.getBoundingClientRect();
+      card.style.setProperty('--mx', ((e.clientX - rect.left) / rect.width * 100) + '%');
+      card.style.setProperty('--my', ((e.clientY - rect.top) / rect.height * 100) + '%');
+    });
+    card.addEventListener('click', () => selectGrade(card.dataset.grade));
+  });
+}
+
+// ============ SELECT GRADE ============
+function selectGrade(grade) {
+  state.currentGrade = grade;
+  state.allStudents = Object.entries(STUDENTS)
+    .filter(([_, s]) => s.grade === grade)
+    .map(([id, s]) => ({ id, name: s.name }));
+  state.removedIds = new Set();
+  state.config = { remove: false, double: false };
+  state.rotation = 0;
+
+  document.getElementById('selectionView').style.display = 'none';
+  document.getElementById('wheelView').classList.add('active');
+  document.getElementById('currentGradeName').textContent = grade;
+  document.getElementById('currentGradeMeta').textContent = `${state.allStudents.length} estudiantes`;
+
+  // Open config modal first to let teacher set preferences
+  setTimeout(() => openConfig(true), 400);
+
+  rebuildActive();
+  drawWheel();
+  renderSidebar();
+}
+
+// ============ REBUILD ACTIVE LIST ============
+function rebuildActive() {
+  let list = state.allStudents.filter(s => !state.removedIds.has(s.id));
+  if (state.config.double) {
+    list = list.flatMap(s => [s, { ...s, _dup: true }]);
+  }
+  state.activeStudents = list;
+}
+
+// ============ DRAW WHEEL ============
+function drawWheel() {
+  const svg = document.getElementById('wheel');
+  const students = state.activeStudents;
+  const n = students.length;
+  svg.innerHTML = '';
+
+  if (n === 0) {
+    svg.innerHTML = `<circle r="190" fill="#1a2138" stroke="#d4a574" stroke-width="2"/>
+      <text x="0" y="0" text-anchor="middle" fill="#a8a394" font-family="Fraunces" font-size="24" font-style="italic">Sin estudiantes</text>`;
+    return;
+  }
+
+  const sliceAngle = (2 * Math.PI) / n;
+  const radius = 190;
+
+  // Outer decorative ring
+  const ring = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  ring.setAttribute('r', '195');
+  ring.setAttribute('fill', 'none');
+  ring.setAttribute('stroke', '#d4a574');
+  ring.setAttribute('stroke-width', '1');
+  ring.setAttribute('opacity', '0.4');
+  svg.appendChild(ring);
+
+  for (let i = 0; i < n; i++) {
+    const startAngle = i * sliceAngle - Math.PI / 2;
+    const endAngle = startAngle + sliceAngle;
+    const x1 = Math.cos(startAngle) * radius;
+    const y1 = Math.sin(startAngle) * radius;
+    const x2 = Math.cos(endAngle) * radius;
+    const y2 = Math.sin(endAngle) * radius;
+    const largeArc = sliceAngle > Math.PI ? 1 : 0;
+
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', `M 0 0 L ${x1} ${y1} A ${radius} ${radius} 0 ${largeArc} 1 ${x2} ${y2} Z`);
+    path.setAttribute('fill', PALETTE[i % PALETTE.length]);
+    path.setAttribute('stroke', '#0a0e1a');
+    path.setAttribute('stroke-width', '1.5');
+    svg.appendChild(path);
+
+    // Text
+    const textAngle = startAngle + sliceAngle / 2;
+    const textRadius = radius * 0.62;
+    const tx = Math.cos(textAngle) * textRadius;
+    const ty = Math.sin(textAngle) * textRadius;
+    const rotateDeg = (textAngle * 180 / Math.PI);
+
+    const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    text.setAttribute('x', tx);
+    text.setAttribute('y', ty);
+    text.setAttribute('text-anchor', 'middle');
+    text.setAttribute('dominant-baseline', 'middle');
+    text.setAttribute('transform', `rotate(${rotateDeg}, ${tx}, ${ty})`);
+    text.setAttribute('fill', '#0a0e1a');
+    text.setAttribute('font-family', 'Outfit, sans-serif');
+
+    // Adapt font-size and truncation to slice count
+    let fontSize = 13;
+    let maxChars = 18;
+    if (n > 20) { fontSize = 11; maxChars = 14; }
+    if (n > 30) { fontSize = 9; maxChars = 11; }
+    if (n > 40) { fontSize = 8; maxChars = 9; }
+
+    text.setAttribute('font-size', fontSize);
+    text.setAttribute('font-weight', '600');
+
+    let displayName = students[i].name;
+    if (displayName.length > maxChars) displayName = displayName.slice(0, maxChars - 1) + '…';
+    text.textContent = displayName;
+    svg.appendChild(text);
+  }
+
+  // Center decorative inner circle (so wheel-center sits perfectly)
+  const inner = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  inner.setAttribute('r', '50');
+  inner.setAttribute('fill', '#0a0e1a');
+  inner.setAttribute('opacity', '0.3');
+  svg.appendChild(inner);
+}
+
+// ============ RENDER SIDEBAR ============
+function renderSidebar() {
+  const total = state.allStudents.length;
+  const removed = state.removedIds.size;
+  document.getElementById('statTotal').textContent = total - removed;
+  document.getElementById('statRemoved').textContent = removed;
+
+  const list = document.getElementById('studentList');
+  list.innerHTML = state.allStudents.map(s => {
+    const removedCls = state.removedIds.has(s.id) ? 'removed' : '';
+    const dupBadge = state.config.double && !state.removedIds.has(s.id) ? '<span class="badge">×2</span>' : '';
+    return `<div class="student-item ${removedCls}" data-id="${s.id}">
+      <span>${s.name}</span>
+      ${dupBadge}
+    </div>`;
+  }).join('');
+}
+
+// ============ SPIN ============
+function spin() {
+  if (state.spinning || state.activeStudents.length === 0) return;
+  state.spinning = true;
+  document.getElementById('spinBtn').classList.add('disabled');
+
+  const n = state.activeStudents.length;
+  const sliceAngle = 360 / n;
+  const winnerIdx = Math.floor(Math.random() * n);
+  // Pointer is at top (12 o'clock = -90°). Slice i center is at i*slice + slice/2 starting at -90°.
+  // We want winner's slice center to land at -90° (top). So target rotation = -(i*slice + slice/2)
+  const targetAngle = -(winnerIdx * sliceAngle + sliceAngle / 2);
+  // Add multiple full spins for drama
+  const fullSpins = 6 + Math.floor(Math.random() * 3);
+  const finalRotation = state.rotation + (fullSpins * 360) + (targetAngle - (state.rotation % 360));
+
+  state.rotation = finalRotation;
+  const wheel = document.getElementById('wheel');
+  wheel.style.transition = 'transform 5.5s cubic-bezier(0.17, 0.67, 0.12, 0.99)';
+  wheel.style.transform = `rotate(${finalRotation}deg)`;
+
+  // Highlight in sidebar progressively (mock spinning effect)
+  let tickIdx = 0;
+  const ticker = setInterval(() => {
+    document.querySelectorAll('.student-item').forEach(el => el.classList.remove('active'));
+    const items = document.querySelectorAll('.student-item:not(.removed)');
+    if (items.length) {
+      items[tickIdx % items.length].classList.add('active');
+      tickIdx++;
+    }
+  }, 80);
+
+  setTimeout(() => {
+    clearInterval(ticker);
+    document.querySelectorAll('.student-item').forEach(el => el.classList.remove('active'));
+    const winner = state.activeStudents[winnerIdx];
+    showResult(winner);
+    state.spinning = false;
+    document.getElementById('spinBtn').classList.remove('disabled');
+
+    if (state.config.remove) {
+      state.removedIds.add(winner.id);
+      // Slight delay before redrawing so the result feels distinct
+      setTimeout(() => {
+        // Reset rotation visually (no animation) so wheel is "fresh"
+        const wheel = document.getElementById('wheel');
+        wheel.style.transition = 'none';
+        wheel.style.transform = 'rotate(0deg)';
+        state.rotation = 0;
+        rebuildActive();
+        drawWheel();
+        renderSidebar();
+      }, 800);
+    }
+  }, 5600);
+}
+
+// ============ RESULT MODAL ============
+function showResult(student) {
+  document.getElementById('resultName').textContent = student.name;
+  document.getElementById('resultMeta').textContent = `${state.currentGrade} · ID ${student.id}`;
+  document.getElementById('resultOverlay').classList.add('active');
+  fireConfetti();
+}
+
+// ============ CONFETTI ============
+function fireConfetti() {
+  const colors = ['#d4a574', '#5eead4', '#c4b5fd', '#fb7185', '#fbbf24', '#86efac', '#f9a8d4'];
+  const count = 80;
+  for (let i = 0; i < count; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.left = (50 + (Math.random() - 0.5) * 30) + '%';
+    piece.style.top = '50%';
+    piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+    document.body.appendChild(piece);
+
+    const angle = (Math.random() * Math.PI * 2);
+    const velocity = 200 + Math.random() * 400;
+    const dx = Math.cos(angle) * velocity;
+    const dy = Math.sin(angle) * velocity - 200;
+    const rot = (Math.random() - 0.5) * 720;
+    const dur = 1500 + Math.random() * 1500;
+
+    piece.animate([
+      { transform: 'translate(0,0) rotate(0deg)', opacity: 1 },
+      { transform: `translate(${dx}px, ${dy + 600}px) rotate(${rot}deg)`, opacity: 0 }
+    ], { duration: dur, easing: 'cubic-bezier(0.2, 0.6, 0.4, 1)' });
+
+    setTimeout(() => piece.remove(), dur);
+  }
+}
+
+// ============ CONFIG MODAL ============
+function openConfig(initial = false) {
+  document.getElementById('configOverlay').classList.add('active');
+  syncToggles();
+}
+function closeConfig() {
+  document.getElementById('configOverlay').classList.remove('active');
+}
+function syncToggles() {
+  document.getElementById('toggleRemove').classList.toggle('on', state.config.remove);
+  document.getElementById('toggleDouble').classList.toggle('on', state.config.double);
+}
+
+// ============ EVENTS ============
+document.addEventListener('DOMContentLoaded', () => {
+  buildGradeGrid();
+
+  document.getElementById('backBtn').addEventListener('click', () => {
+    document.getElementById('wheelView').classList.remove('active');
+    document.getElementById('selectionView').style.display = '';
+  });
+
+  document.getElementById('spinBtn').addEventListener('click', spin);
+
+  document.getElementById('configBtn').addEventListener('click', () => openConfig());
+  document.getElementById('configClose').addEventListener('click', closeConfig);
+  document.getElementById('configOverlay').addEventListener('click', e => {
+    if (e.target.id === 'configOverlay') closeConfig();
+  });
+
+  document.getElementById('toggleRemove').addEventListener('click', () => {
+    state.config.remove = !state.config.remove;
+    syncToggles();
+  });
+  document.getElementById('toggleDouble').addEventListener('click', () => {
+    state.config.double = !state.config.double;
+    syncToggles();
+    rebuildActive();
+    // Reset wheel rotation when count changes
+    const wheel = document.getElementById('wheel');
+    wheel.style.transition = 'none';
+    wheel.style.transform = 'rotate(0deg)';
+    state.rotation = 0;
+    drawWheel();
+    renderSidebar();
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    state.removedIds = new Set();
+    rebuildActive();
+    const wheel = document.getElementById('wheel');
+    wheel.style.transition = 'none';
+    wheel.style.transform = 'rotate(0deg)';
+    state.rotation = 0;
+    drawWheel();
+    renderSidebar();
+  });
+
+  document.getElementById('resultClose').addEventListener('click', () => {
+    document.getElementById('resultOverlay').classList.remove('active');
+  });
+  document.getElementById('resultSpinAgain').addEventListener('click', () => {
+    document.getElementById('resultOverlay').classList.remove('active');
+    setTimeout(spin, 400);
+  });
+  document.getElementById('resultOverlay').addEventListener('click', e => {
+    if (e.target.id === 'resultOverlay') {
+      document.getElementById('resultOverlay').classList.remove('active');
+    }
+  });
+});
+</script>
+
+</body>
+</html>
