@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html translate="no" lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="google" content="notranslate">
+  <meta http-equiv="Content-Language" content="es">
+  <title>Topic: Narrating Lives (Biographies). - Primer Año, Noveno, Segundo Año</title>
+  <link rel="stylesheet" href="coeduca-core.css">
+  <link rel="icon" href="favicon.png" type="image/png">
+</head>
+<body>
+  <div id="app"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="students.js"></script>
+  <script src="rigo.js"></script>
+  <script src="coeduca-core.js"></script>
+  <script src="coeduca-exercises.js"></script>
+  <script src="coeduca-games.js"></script>
+  <rigo-mascot></rigo-mascot>
+  <script>
+    COEDUCA.init({
+      container: '#app',
+      topic: 'Topic: Narrating Lives (Biographies).',
+      level: 'Primer Año, Noveno, Segundo Año',
+      pdfDesign: 'Colorido', 
+      colors: { primary: '#770000', accent: '#BF9200', bg: '#FA4EA4' },
+      
+      exercises: [
+        {
+          type: 'note',
+          html: `
+            <div style="background: #ffffff; padding: 20px; border-radius: 10px; border-left: 5px solid #BF9200;">
+              <h3 style="color: #770000; margin-top: 0;">📚 Vocabulary & Connectors</h3>
+              <p>Revisa este vocabulario antes de comenzar los ejercicios:</p>
+              
+              <h4 style="color: #770000;">Biography Verbs (Verbos Biográficos)</h4>
+              <ul style="list-style-type: none; padding-left: 0;">
+                <li>🌟 <strong>Born:</strong> Nacer / Nacido</li>
+                <li>🌱 <strong>Grew up:</strong> Creció</li>
+                <li>🏠 <strong>Moved:</strong> Se mudó</li>
+                <li>💍 <strong>Married:</strong> Se casó</li>
+                <li>🎓 <strong>Graduated:</strong> Se graduó</li>
+                <li>💼 <strong>Worked:</strong> Trabajó</li>
+                <li>🕊️ <strong>Died:</strong> Murió / Falleció</li>
+              </ul>
+
+              <h4 style="color: #770000;">Chronological Connectors (Conectores Cronológicos)</h4>
+              <ul style="list-style-type: none; padding-left: 0;">
+                <li>1️⃣ <strong>First / Firstly:</strong> Primero / En primer lugar</li>
+                <li>➡️ <strong>Then:</strong> Luego / Entonces</li>
+                <li>⏭️ <strong>Next:</strong> Siguiente / Después</li>
+                <li>⏳ <strong>Later:</strong> Más tarde</li>
+                <li>🔄 <strong>After / Afterwards:</strong> Después / Posteriormente</li>
+                <li>🏁 <strong>Finally:</strong> Finalmente / Por último</li>
+                <li>🎯 <strong>Eventually:</strong> Eventualmente / Al final</li>
+                <li>⏱️ <strong>Meanwhile:</strong> Mientras tanto</li>
+                <li>⚡ <strong>Suddenly:</strong> De repente</li>
+              </ul>
+            </div>
+          `
+        },
+        {
+          type: 'matchimage',
+          title: 'Historical Figures',
+          instruction: 'Match the names of these famous people with their portraits.',
+          dataA: [
+            { word: 'Nelson Mandela', image: 'files/nelson_mandela_portrait.png' },
+            { word: 'Martin Luther King', image: 'files/martin_luther_king_portrait.png' },
+            { word: 'Marie Curie', image: 'files/marie_curie_portrait.png' },
+            { word: 'Fiona Apple', image: 'files/fiona_apple_portrait.png' },
+            { word: 'Naomi Campbell', image: 'files/naomi_campbell_portrait.png' },
+            { word: 'Albert Einstein', image: 'files/albert_einstein_portrait.png' }
+          ],
+          dataB: [
+            { word: 'Marie Curie', image: 'files/marie_curie_lab.png' },
+            { word: 'Nelson Mandela', image: 'files/nelson_mandela_smile.png' },
+            { word: 'Martin Luther King', image: 'files/martin_luther_king_speech.png' },
+            { word: 'Fiona Apple', image: 'files/fiona_apple_stage.png' },
+            { word: 'Naomi Campbell', image: 'files/naomi_campbell_runway.png' },
+            { word: 'Rosa Parks', image: 'files/rosa_parks_bus.png' }
+          ]
+        },
+        {
+          type: 'wordsearch',
+          title: 'Connecting Events',
+          instruction: 'Find the chronological connectors hidden in the grid.',
+          dataA: {
+            words: ['FIRST', 'LATER', 'THEN', 'FINALLY', 'NEXT', 'AFTER', 'BEFORE', 'SUDDENLY'],
+            gridSize: 12
+          },
+          dataB: {
+            words: ['FIRSTLY', 'AFTERWARDS', 'EVENTUALLY', 'SOON', 'THEN', 'LATER', 'FINALLY', 'MEANWHILE'],
+            gridSize: 12
+          }
+        },
+        {
+          type: 'multiplechoice',
+          title: 'Who is this?',
+          instruction: 'Read the short biography fact and select the correct person.',
+          dataA: [
+            { q: 'She discovered radium and polonium and won two Nobel Prizes.', options: ['Marie Curie', 'Fiona Apple', 'Naomi Campbell'], answer: 0 },
+            { q: 'He was an anti-apartheid revolutionary and the first black president of South Africa.', options: ['Martin Luther King', 'Nelson Mandela', 'Albert Einstein'], answer: 1 },
+            { q: 'He was a Baptist minister who led the Civil Rights Movement in the USA.', options: ['Nelson Mandela', 'Martin Luther King', 'Malcolm X'], answer: 1 },
+            { q: 'She is an American singer-songwriter known for her album "Tidal".', options: ['Marie Curie', 'Naomi Campbell', 'Fiona Apple'], answer: 2 },
+            { q: 'She is an iconic British supermodel who rose to fame in the late 1980s.', options: ['Naomi Campbell', 'Fiona Apple', 'Rosa Parks'], answer: 0 },
+            { q: 'He was a theoretical physicist who developed the theory of relativity.', options: ['Albert Einstein', 'Nelson Mandela', 'Martin Luther King'], answer: 0 }
+          ],
+          dataB: [
+            { q: 'This scientist conducted pioneering research on radioactivity.', options: ['Fiona Apple', 'Marie Curie', 'Naomi Campbell'], answer: 1 },
+            { q: 'He spent 27 years in prison before leading his country.', options: ['Martin Luther King', 'Albert Einstein', 'Nelson Mandela'], answer: 2 },
+            { q: 'He delivered the famous "I Have a Dream" speech in 1963.', options: ['Martin Luther King', 'Nelson Mandela', 'Abraham Lincoln'], answer: 0 },
+            { q: 'She is a Grammy-winning musician known for her unique piano-driven pop music.', options: ['Marie Curie', 'Fiona Apple', 'Naomi Campbell'], answer: 1 },
+            { q: 'She was one of the most recognizable and in-demand models of the 1990s.', options: ['Fiona Apple', 'Marie Curie', 'Naomi Campbell'], answer: 2 },
+            { q: 'She became an icon of the civil rights movement when she refused to give up her bus seat.', options: ['Rosa Parks', 'Naomi Campbell', 'Marie Curie'], answer: 0 }
+          ]
+        },
+        {
+          type: 'emojiphrase',
+          title: 'Biography Verbs in Emojis',
+          instruction: 'Guess the biography verb based on the emojis.',
+          dataA: [
+            { emojis: '👶🍼', accept: ['born', 'was born'], example: 'He was ___ in 1990.' },
+            { emojis: '👦➡️👨', accept: ['grew up', 'grow up'], example: 'She ___ in London.' },
+            { emojis: '🏠🚚', accept: ['moved', 'move'], example: 'They ___ to a new city.' },
+            { emojis: '💍👰', accept: ['married', 'got married'], example: 'They got ___ last year.' },
+            { emojis: '🪦🥀', accept: ['died', 'passed away'], example: 'He ___ in 2020.' },
+            { emojis: '🎓📜', accept: ['graduated', 'graduate'], example: 'She ___ from university.' }
+          ],
+          dataB: [
+            { emojis: '👶🏥', accept: ['born', 'was born'], example: 'I was ___ in a big hospital.' },
+            { emojis: '🌱🌳', accept: ['grew up', 'grow up'], example: 'He ___ in the countryside.' },
+            { emojis: '✈️🌍🏠', accept: ['moved', 'relocated'], example: 'My family ___ to another country.' },
+            { emojis: '💒💐', accept: ['married', 'got married'], example: 'She got ___ in a beautiful church.' },
+            { emojis: '⚰️🕊️', accept: ['died', 'passed away'], example: 'The famous scientist ___ peacefully.' },
+            { emojis: '💼🏢', accept: ['worked', 'work'], example: 'He ___ as a teacher for 30 years.' }
+          ]
+        },
+        {
+          type: 'matchlines',
+          title: 'Translate the Verbs',
+          instruction: 'Match the English biography verbs to their Spanish meaning.',
+          dataA: [
+            { left: 'Born', right: 'Nació' },
+            { left: 'Grew up', right: 'Creció' },
+            { left: 'Moved', right: 'Se mudó' },
+            { left: 'Married', right: 'Se casó' },
+            { left: 'Died', right: 'Murió' },
+            { left: 'Graduated', right: 'Se graduó' }
+          ],
+          dataB: [
+            { left: 'Worked', right: 'Trabajó' },
+            { left: 'Studied', right: 'Estudió' },
+            { left: 'Lived', right: 'Vivió' },
+            { left: 'Traveled', right: 'Viajó' },
+            { left: 'Discovered', right: 'Descubrió' },
+            { left: 'Fought', right: 'Luchó' }
+          ]
+        },
+        {
+          type: 'dropdown',
+          title: 'Complete the Story',
+          instruction: 'Select the correct chronological connector to complete the biographical sentences.',
+          dataA: [
+            { before: '', options: ['First', 'Later', 'Finally'], answer: 0, after: ', Marie Curie was born in Poland in 1867.' },
+            { before: '', options: ['First', 'Then', 'Finally'], answer: 1, after: ', she moved to Paris to study physics and math.' },
+            { before: '', options: ['Next', 'Meanwhile', 'Finally'], answer: 0, after: ', she met and married Pierre Curie.' },
+            { before: '', options: ['After', 'Later', 'First'], answer: 1, after: 'on, they discovered the elements polonium and radium.' },
+            { before: '', options: ['First', 'Then', 'Finally'], answer: 2, after: ', she became the first woman to win a Nobel Prize.' },
+            { before: 'She continued her hard work, and', options: ['first', 'afterwards', 'eventually'], answer: 2, after: 'won a second Nobel Prize in a different science.' }
+          ],
+          dataB: [
+            { before: '', options: ['First', 'Then', 'Later'], answer: 0, after: 'of all, Nelson Mandela studied to be a lawyer.' },
+            { before: 'He joined the political movement and', options: ['first', 'later', 'finally'], answer: 1, after: 'became a leader.' },
+            { before: '', options: ['Next', 'First', 'Afterwards'], answer: 0, after: ', he was arrested and sent to prison for his activism.' },
+            { before: '', options: ['First', 'Then', 'Finally'], answer: 1, after: ', he spent 27 long years in jail.' },
+            { before: 'He was released and', options: ['first', 'meanwhile', 'afterwards'], answer: 2, after: 'won the Nobel Peace Prize for his peaceful efforts.' },
+            { before: '', options: ['Finally', 'Next', 'First'], answer: 0, after: ', he made history by being elected President of South Africa.' }
+          ]
+        }
+      ],
+      
+      game: { type: 'dino', winScore: 300 }
+    });
+  </script>
+</body>
+</html>
